@@ -114,7 +114,7 @@ const HeroSection = () => {
             <Github className="w-6 h-6" />
           </a>
           <a
-            href="https://linkedin.com/in/eduardo-alves"
+            href="https://linkedin.com/in/contatoedu"
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 glow-effect"
@@ -122,7 +122,7 @@ const HeroSection = () => {
             <Linkedin className="w-6 h-6" />
           </a>
           <a
-            href="mailto:eduardo@email.com"
+            href="mailto:contatoedu07@gmail.com"
             className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 glow-effect"
           >
             <Mail className="w-6 h-6" />
@@ -140,7 +140,7 @@ const SkillsSection = () => {
     { name: 'CSS3', level: 85, icon: Code },
     { name: 'JavaScript', level: 75, icon: Code },
     { name: 'Java', level: 60, icon: Coffee },
-    { name: 'Inteligência Artificial', level: 95, icon: Brain },
+    { name: 'Inteligência Artificial', level: 75, icon: Brain },
     { name: 'Machine Learning', level: 90, icon: Brain },
   ];
 
