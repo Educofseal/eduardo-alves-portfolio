@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import profileImage from '../assets/eduardo_alves_profile.jpg';
 
 /**
@@ -12,8 +12,6 @@ import profileImage from '../assets/eduardo_alves_profile.jpg';
 export default function PixelArtScene() {
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Replace or extend with your project screenshots
-  const projectImages = useMemo(() => [profileImage], []);
   const blimpProject = profileImage;
 
   return (
@@ -36,10 +34,15 @@ export default function PixelArtScene() {
           role="img"
           aria-label="Cena de Pixel Art com carro, dirigível e avião animados"
           onClick={() => setIsPlaying((prev) => !prev)}
-          title="Clique para {isPlaying ? 'pausar' : 'iniciar'}"
+          title={`Clique para ${isPlaying ? 'pausar' : 'iniciar'}`}
         >
+          {/* Sun + sea + bokeh to match reference */}
+          <div className="sun" />
           {/* Stars/sparkles layer */}
           <div className="sky-sparkles" />
+          <div className="sea" />
+          <div className="bokeh-dots" />
+          <div className="city-lights" />
 
           {/* Mountain silhouette to keep perspective */}
           <div className="mountain" />
@@ -61,24 +64,27 @@ export default function PixelArtScene() {
             <div className="blimp-body" />
             <div className="blimp-fins" />
             <div className="blimp-gondola" />
+            <div className="blimp-prop" />
             <div className="blimp-sign">
               <img src={blimpProject} alt="Projeto no letreiro do dirigível" />
             </div>
           </div>
 
-          {/* Plane with banner marquee */}
+          {/* Plane with banner (text + avatar) */}
           <div className="plane">
             <div className="plane-body" />
             <div className="plane-wing" />
             <div className="plane-tail" />
             <div className="plane-banner">
-              <div className="banner-track">
-                {projectImages.concat(projectImages).map((src, i) => (
-                  <img src={src} alt={`Projeto ${i + 1}`} key={i} />
-                ))}
+              <div className="banner-content">
+                <img className="banner-avatar" src={profileImage} alt="Avatar" />
+                <span className="banner-text">Eduardo Alves</span>
               </div>
             </div>
           </div>
+
+          {/* Corner sparkle */}
+          <div className="corner-star" />
         </div>
 
         <p className="pixel-help">Clique na cena ou no botão para {isPlaying ? 'pausar' : 'iniciar'} a animação.</p>
