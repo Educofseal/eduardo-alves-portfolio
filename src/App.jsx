@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail, Code, Brain, Coffee, Calendar, MapPin, GraduationCap, Star, GitFork } from 'lucide-react';
 import './App.css';
+import PixelArtScene from './components/PixelArtScene.jsx';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog.jsx';
 import profileImage from './assets/eduardo_alves_profile.jpg';
-import { fetchGitHubStats } from './components/GitHubAPI.js';
+import { fetchGitHubStats, fetchGitHubRepos } from './components/GitHubAPI.js';
 
 // Componente para partículas flutuantes
 const FloatingParticles = () => {
@@ -383,8 +385,54 @@ const Footer = () => {
 
 // Componente principal
 function App() {
+  const [sceneOpen, setSceneOpen] = useState(false);
+  const [sceneRepos, setSceneRepos] = useState([]);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const repos = await fetchGitHubRepos();
+        setSceneRepos(repos);
+      } catch (e) {
+        // silently ignore
+      }
+    };
+    load();
+  }, []);
+
+  const renderRepoPills = (repos) => (
+    <div className="sign-track">
+      {repos.map((repo, idx) => (
+        <a key={idx} href={repo.html_url} target="_blank" rel="noreferrer" className="repo-pill">
+          <img className="repo-thumb" src={(repo.owner && repo.owner.avatar_url) || profileImage} alt={repo.name} />
+          <span>{repo.name}</span>
+        </a>
+      ))}
+    </div>
+  );
+
+  const blimpNodes = sceneRepos.slice(0, 3);
+  const planeNodes = sceneRepos.slice(3, 6).length ? sceneRepos.slice(3, 6) : sceneRepos.slice(0, 3);
+
   return (
     <div className="min-h-screen animated-bg text-white">
+      <section className="py-14 px-6">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold mb-6">Cena Pixel Art clicável</h2>
+          <Dialog open={sceneOpen} onOpenChange={setSceneOpen}>
+            <DialogTrigger className="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-3 rounded-md glow-effect">
+              Iniciar animação
+            </DialogTrigger>
+            <DialogContent className="p-0 bg-transparent border-none shadow-none max-w-5xl">
+              <PixelArtScene
+                start={sceneOpen}
+                blimpContent={blimpNodes.length ? renderRepoPills(blimpNodes) : null}
+                planeContent={planeNodes.length ? renderRepoPills(planeNodes) : null}
+              />
+            </DialogContent>
+          </Dialog>
+        </div>
+      </section>
       <HeroSection />
       <AboutSection />
       <SkillsSection />
