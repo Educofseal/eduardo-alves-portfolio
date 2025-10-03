@@ -293,17 +293,7 @@
     );
 }
 
-/* Pause by default; run when data-playing=true */
-.pixel-scene *,
-.pixel-scene *::before,
-.pixel-scene *::after {
-  animation-play-state: paused;
-}
-.pixel-scene[data-playing="true"] *,
-.pixel-scene[data-playing="true"] *::before,
-.pixel-scene[data-playing="true"] *::after {
-  animation-play-state: running;
-}
+/* Pixel scene is static: no animations on children */
 
 /* Stars sparkles */
 .sky-sparkles {
@@ -312,12 +302,8 @@
   background-image: radial-gradient(rgba(255,255,255,0.7) 1px, transparent 1px);
   background-size: 4px 4px;
   opacity: 0.25;
-  animation: sparkleShift 12s linear infinite;
 }
-@keyframes sparkleShift {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(8px); }
-}
+/* sparkleShift removed */
 
 /* Mountain silhouette */
 .mountain {
@@ -354,135 +340,11 @@
   box-shadow: 0 0 10px rgba(255,255,255,0.3);
 }
 
-/* Car */
-.car {
-  position: absolute;
-  bottom: 22px;
-  left: -25%;
-  width: 160px;
-  height: 64px;
-  animation: carDrive 14s linear infinite;
-}
-.car-body {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(#2f325d, #20244b);
-  border-radius: 8px;
-  box-shadow: inset 0 -6px 0 0 #171a3a;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-}
-.wheel {
-  position: absolute;
-  bottom: -10px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 50%, #cdd6ff 0 5px, #141739 6px 100%);
-  animation: wheelSpin 0.8s linear infinite;
-}
-.wheel-front { left: 112px; }
-.wheel-back { left: 20px; }
+/* Car removed */
 
-@keyframes wheelSpin { to { transform: rotate(360deg); } }
-@keyframes carDrive {
-  0% { transform: translateX(-20%); }
-  100% { transform: translateX(120%); }
-}
+/* Blimp removed */
 
-/* Blimp */
-.blimp {
-  position: absolute;
-  left: -30%;
-  top: 20%;
-  width: 280px;
-  height: 120px;
-  animation: blimpFloat 26s ease-in-out infinite;
-}
-.blimp-body {
-  position: absolute;
-  left: 0; right: 0; top: 22px; height: 76px;
-  background: linear-gradient(90deg, #ff6b6b, #ffa07a);
-  border-radius: 60px;
-  border: 3px solid rgba(0,0,0,0.2);
-}
-.blimp-fins {
-  position: absolute;
-  right: 10px; top: 16px; width: 32px; height: 88px;
-  background: #ffd9b3;
-  border-radius: 10px;
-}
-.blimp-gondola {
-  position: absolute;
-  left: 70px; bottom: -14px; width: 64px; height: 28px;
-  background: #1d2047;
-  border: 2px solid rgba(255,255,255,0.15);
-  border-radius: 6px;
-}
-.blimp-sign {
-  position: absolute;
-  left: 72px; top: 10px; width: 140px; height: 96px;
-  background: #0f132f;
-  border: 2px solid rgba(255,255,255,0.2);
-  border-radius: 10px;
-  overflow: hidden;
-  display: grid; place-items: center;
-}
-.blimp-sign img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+/* Plane removed */
 
-@keyframes blimpFloat {
-  0%   { transform: translateX(-35%) translateY(0); }
-  50%  { transform: translateX(50%) translateY(-6px); }
-  100% { transform: translateX(135%) translateY(0); }
-}
-
-/* Plane */
-.plane {
-  position: absolute;
-  right: -30%;
-  top: 22%;
-  width: 160px;
-  height: 60px;
-  animation: planeFly 8s linear infinite;
-}
-.plane-body { position: absolute; inset: 14px 40px 16px 8px; background: #7fe0d6; border-radius: 14px; box-shadow: inset 0 -4px 0 #4db3a8; }
-.plane-wing { position: absolute; left: 42px; top: 26px; width: 60px; height: 16px; background: #62c9bf; border-radius: 6px; }
-.plane-tail { position: absolute; right: 16px; top: 14px; width: 20px; height: 22px; background: #5ac3b9; border-radius: 4px; }
-
-.plane-banner {
-  position: absolute;
-  right: 150px;
-  top: 8px;
-  width: 260px;
-  height: 44px;
-  background: rgba(15,19,47,0.85);
-  border: 2px solid rgba(255,255,255,0.25);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.banner-track {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 100%;
-  animation: bannerMarquee 12s linear infinite;
-}
-.banner-track img { height: 100%; width: 72px; object-fit: cover; image-rendering: pixelated; }
-
-@keyframes bannerMarquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-@keyframes planeFly {
-  0% { transform: translateX(20%); }
-  100% { transform: translateX(-130%); }
-}
-
-.pixel-help {
-  padding: 0.75rem 1.25rem 1.25rem;
-  color: #cbd5ff;
-  font-size: 0.9rem;
-  text-align: center;
-}
+/* Help text removed */
 
