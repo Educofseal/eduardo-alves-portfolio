@@ -67,6 +67,41 @@ export const fetchGitHubEvents = async () => {
   }
 };
 
+// Buscar commits recentes (lista detalhada)
+export const fetchRecentCommits = async (limit = 15) => {
+  try {
+    const response = await fetch(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/events?per_page=100`);
+    if (!response.ok) {
+      throw new Error('Erro ao buscar eventos para commits recentes');
+    }
+    const events = await response.json();
+
+    const commits = [];
+    for (const event of events) {
+      if (event.type !== 'PushEvent' || !event.payload || !event.payload.commits) continue;
+      const repoFullName = event.repo?.name || `${GITHUB_USERNAME}`;
+      const createdAt = event.created_at;
+      for (const commit of event.payload.commits) {
+        commits.push({
+          id: `${repoFullName}-${commit.sha}`,
+          repo: repoFullName,
+          message: commit.message || 'Commit',
+          sha: commit.sha,
+          url: `https://github.com/${repoFullName}/commit/${commit.sha}`,
+          date: createdAt,
+          author: commit.author?.name || GITHUB_USERNAME,
+        });
+      }
+    }
+
+    commits.sort((a, b) => new Date(b.date) - new Date(a.date));
+    return commits.slice(0, limit);
+  } catch (error) {
+    console.error('Erro ao buscar commits recentes do GitHub:', error);
+    return [];
+  }
+};
+
 // Função para buscar estatísticas gerais
 export const fetchGitHubStats = async () => {
   try {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail, Code, Brain, Coffee, Calendar, MapPin, GraduationCap, Star, GitFork } from 'lucide-react';
 import './App.css';
 import profileImage from './assets/eduardo_alves_profile.jpg';
-import { fetchGitHubStats } from './components/GitHubAPI.js';
+import { fetchGitHubStats, fetchRecentCommits } from './components/GitHubAPI.js';
  
 
 // Componente para partículas flutuantes
@@ -213,6 +213,7 @@ const GitHubSection = () => {
     following: 0
   });
   const [loading, setLoading] = useState(true);
+  const [recentCommits, setRecentCommits] = useState([]);
 
   useEffect(() => {
     const loadGitHubData = async () => {
@@ -220,6 +221,8 @@ const GitHubSection = () => {
       try {
         const data = await fetchGitHubStats();
         setGithubData(data);
+        const commits = await fetchRecentCommits(12);
+        setRecentCommits(commits);
       } catch (error) {
         console.error('Erro ao carregar dados do GitHub:', error);
         // Fallback para dados simulados em caso de erro
@@ -261,6 +264,8 @@ const GitHubSection = () => {
     };
 
     loadGitHubData();
+    const interval = setInterval(loadGitHubData, 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
   const getLanguageColor = (language) => {
@@ -348,6 +353,28 @@ const GitHubSection = () => {
               </div>
             </a>
           ))}
+        </div>
+
+        {/* Commits recentes */}
+        <div className="mt-16">
+          <h3 className="text-2xl font-semibold text-white mb-6">Commits Recentes</h3>
+          <ul className="space-y-3">
+            {recentCommits.map((c) => (
+              <li key={c.id} className="bg-white/5 backdrop-blur-lg rounded-lg p-4 border border-white/10">
+                <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 font-medium">
+                  {c.message.length > 120 ? c.message.slice(0, 120) + '…' : c.message}
+                </a>
+                <div className="text-sm text-gray-400 mt-1 flex flex-wrap gap-3">
+                  <span>Repo: {c.repo}</span>
+                  <span>Autor: {c.author}</span>
+                  <span>{new Date(c.date).toLocaleString('pt-BR')}</span>
+                </div>
+              </li>
+            ))}
+            {recentCommits.length === 0 && (
+              <li className="text-gray-400">Sem commits recentes encontrados.</li>
+            )}
+          </ul>
         </div>
         
         <div className="text-center mt-12">
