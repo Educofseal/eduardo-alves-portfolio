@@ -3,7 +3,7 @@ import { Github, Linkedin, Mail, Code, Brain, Coffee, Calendar, MapPin, Graduati
 import './App.css';
 import profileImage from './assets/eduardo_alves_profile.jpg';
 import { fetchGitHubStats } from './components/GitHubAPI.js';
-import PixelArtScene from './components/PixelArtScene.jsx';
+ 
 
 // Componente para partículas flutuantes
 const FloatingParticles = () => {
@@ -387,7 +387,6 @@ function App() {
   return (
     <div className="min-h-screen animated-bg text-white">
       <HeroSection />
-      <PixelArtScene />
       <AboutSection />
       <SkillsSection />
       <GitHubSection />
